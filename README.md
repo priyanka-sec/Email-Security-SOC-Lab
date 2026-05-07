@@ -5,6 +5,8 @@ Phishing email simulation, detection, and forensic investigation using
 Kali Linux • Windows Server 2022 • hMailServer • MITRE ATT&CK
 </p></b>
 
+<br>
+
 This project demonstrates the complete workflow a SOC Analyst follows to investigate a phishing email from SMTP delivery to MITRE ATT&CK mapping, using real forensic evidence from a mail server.
 
 A phishing attack was simulated from an attacker machine running Kali Linux to a victim mail server running Windows Server 2022 with hMailServer, all hosted inside Oracle VM VirtualBox. The phishing email was crafted using the `swaks` SMTP testing tool.
