@@ -1,9 +1,9 @@
 <h1 align="center">Email Security SOC Lab — Phishing Detection & Investigation</h1>
 
-<p align="center">
+<p align="center"><b>
 Phishing email simulation, detection, and forensic investigation using 
 Kali Linux • Windows Server 2022 • hMailServer • MITRE ATT&CK
-</p>
+</p></b>
 
 This project demonstrates the complete workflow a SOC Analyst follows to investigate a phishing email from SMTP delivery to MITRE ATT&CK mapping, using real forensic evidence from a mail server.
 
