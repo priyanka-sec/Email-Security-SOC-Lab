@@ -1,3 +1,5 @@
+Now check the Upgraded one below
+
 <h1 align="center">Email Security SOC Lab — Phishing Detection & Investigation</h1>
 
 <p align="center">
@@ -10,10 +12,10 @@ This project demonstrates the complete workflow a SOC Analyst follows to investi
 A phishing attack was simulated from an attacker machine running Kali Linux to a victim mail server running Windows Server 2022 with hMailServer, all hosted inside Oracle VM VirtualBox. The phishing email was crafted using the `swaks` SMTP testing tool.
 
 
+<br><br>
 
 
-
-## Objective
+## 🎯 Objective
 - Simulate a phishing email attack using SMTP
 - Capture the email on the mail server
 - Perform email header forensic analysis
@@ -23,7 +25,7 @@ A phishing attack was simulated from an attacker machine running Kali Linux to a
 - Produce a professional SOC incident report
 
 
-
+<br><br>
 
 
 ## 🧰 Lab Environment
@@ -37,15 +39,16 @@ A phishing attack was simulated from an attacker machine running Kali Linux to a
 | swaks | SMTP tool used to craft phishing email |
 
 
+<br><br>
 
 
-
-## Attack Scenario Summary
+## 🧪 Attack Scenario Summary
 
 An attacker used `swaks` from Kali Linux to send a spoofed phishing email to a victim mailbox hosted on hMailServer.  
 The objective was to investigate how a SOC Analyst detects the real sender, extracts evidence from email headers, identifies IOCs, and maps the attack to the MITRE ATT&CK framework.
 
 
+<br><br>
 
 
 ## 🗺️ Network Topology
@@ -56,7 +59,7 @@ Kali Linux (192.168.56.10)  --->  Windows Server 2022 (192.168.56.110)
 ```
 
 
-
+<br><br>
 
 
 ## 🧪 Attack Simulation
@@ -68,7 +71,7 @@ The email contained:
 - Fake password reset link
 
 
-
+<br><br>
 
 
 ## 🔍 Investigation Workflow
@@ -82,7 +85,7 @@ The email contained:
 8. Incident report prepared
 
 
-
+<br><br>
 
 
 ## 📸 Investigation Evidence (Screenshots)
@@ -101,7 +104,7 @@ All screenshots are available in the `Screenshots` folder, showing:
 | Incident report | Final SOC documentation |
 
 
-
+<br><br>
 
 
 ## 📄 Documentation
@@ -112,20 +115,20 @@ All screenshots are available in the `Screenshots` folder, showing:
 - `Incident_Report.pdf` — Full SOC incident report
 
 
-
+<br><br>
 
 
 ## 🧠 Skills Demonstrated
 SMTP Configuration • Email Forensics • Phishing Detection • IOC Extraction • Threat Intelligence • MITRE ATT&CK Mapping • SOC Incident Reporting
 
 
-
+<br><br>
 
 
 > This project follows the exact workflow a SOC Analyst performs during a phishing email investigation in a real environment.
 
 
-
+<br><br>
 
 
 ## Conclusion
