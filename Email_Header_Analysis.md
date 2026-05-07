@@ -6,7 +6,9 @@ C:\Program Files (x86)\hMailServer\Data\lab.local\victime\
 
 The `.eml` file was opened using Notepad to analyze the raw email header for forensic evidence.
 
----
+
+<br><br>
+
 
 ## Raw Email Header (Important Fields)
 
@@ -21,7 +23,9 @@ The `.eml` file was opened using Notepad to analyze the raw email header for for
 | Subject | Urgent: Reset Your Password | Social engineering tactic |
 | X-Mailer | swaks | Attacker tool fingerprint |
 
----
+
+<br><br>
+
 
 ## Key Finding
 
