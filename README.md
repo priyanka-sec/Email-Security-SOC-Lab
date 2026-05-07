@@ -1,5 +1,3 @@
-Now check the Upgraded one below
-
 <h1 align="center">Email Security SOC Lab — Phishing Detection & Investigation</h1>
 
 <p align="center">
