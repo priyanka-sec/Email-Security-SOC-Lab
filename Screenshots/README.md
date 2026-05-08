@@ -13,7 +13,7 @@ Each screenshot represents an important step of the investigation workflow follo
 | Screenshot | Description |
 |---|---|
 | ![01_VirtualBox_both_VMs_running](01_VirtualBox_both_VMs_running.jpg) | Both Kali Linux and Windows Server 2022 virtual machines running in VirtualBox |
-| ![02_Kali_linux_ip_address_eth0_eth1](02_Kali_linux_ip_address_eth0_eth1.jpg) | Shows the IP address of the attacker machine (Kali Linux) |
+| ![02_KaliLinux_ip_address_eth0_eth1](02_KaliLinux_ip_address_eth0_eth1.jpg) | Shows the IP address of the attacker machine (Kali Linux) |
 | ![03_WindowsServer_ipconfig_both_adapters](03_WindowsServer_ipconfig_both_adapters.jpg) | Shows the IP address of the victim mail server |
 | ![04_KaliLinux_ping_to_WindowsServer](04_KaliLinux_ping_to_WindowsServer.jpg) | Ping test from Kali Linux to Windows Server |
 | ![05_WindowsServer_ping_to_KaliLinux](05_WindowsServer_ping_to_KaliLinux.jpg) | Ping test from Windows Server to Kali Linux |
