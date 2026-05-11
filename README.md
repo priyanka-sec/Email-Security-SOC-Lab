@@ -1,137 +1,154 @@
-<h1 align="center">Email Security SOC Lab — Phishing Detection & Investigation</h1>
+<h1 align="center">🛡️ Email Security SOC Lab</h1>
+<h3 align="center">Phishing Email Attack Simulation — Detection, Forensic Analysis & MITRE ATT&CK Mapping</h3>
 
-<p align="center"><b>
-Phishing email simulation, detection, and forensic investigation using 
-Kali Linux • Windows Server 2022 • hMailServer • MITRE ATT&CK
-</p></b>
-
-<br>
-
-This project demonstrates the complete workflow a SOC Analyst follows to investigate a phishing email from SMTP delivery to MITRE ATT&CK mapping, using real forensic evidence from a mail server.
-
-A phishing attack was simulated from an attacker machine running Kali Linux to a victim mail server running Windows Server 2022 with hMailServer, all hosted inside Oracle VM VirtualBox. The phishing email was crafted using the `swaks` SMTP testing tool.
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-VirtualBox-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Attacker-Kali%20Linux-red?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Victim-Windows%20Server%202022-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/MITRE-T1566%20Phishing-orange?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Status-Completed-green?style=flat-square"/>
+</p>
 
 <br><br>
 
+## 📌 Project Overview
 
-## 🎯 Objective
-- Simulate a phishing email attack using SMTP
-- Capture the email on the mail server
-- Perform email header forensic analysis
-- Extract Indicators of Compromise (IOCs)
-- Validate IOCs with threat intelligence
-- Map the attack to relevant MITRE ATT&CK techniques
-- Produce a professional SOC incident report
+This project demonstrates the **complete SOC analyst workflow** for investigating a phishing email attack — from attack simulation to forensic analysis, IOC extraction, threat intelligence validation, MITRE ATT&CK mapping, and professional incident reporting.
 
+The entire lab was built inside **Oracle VM VirtualBox** using two virtual machines — a **Kali Linux attacker machine** and a **Windows Server 2022 victim mail server** running **hMailServer**.
+
+> This project replicates exactly what a SOC Analyst does during a real phishing email investigation.
 
 <br><br>
 
+## 🎯 Objectives
 
-## 🧰 Lab Environment
+- ✅ Simulate a phishing email attack using the `swaks` SMTP tool
+- ✅ Configure a real mail server (hMailServer) to receive and store emails
+- ✅ Extract and forensically analyse raw email headers
+- ✅ Identify the attacker's real IP address from the `Received` header field
+- ✅ Extract all Indicators of Compromise (IOCs) from the email
+- ✅ Validate IOCs using VirusTotal threat intelligence
+- ✅ Map the attack to MITRE ATT&CK Technique T1566 — Phishing
+- ✅ Produce a professional SOC Incident Report
 
-| Component | Role |
+<br><br>
+
+## 🧰 Tools & Technologies Used
+
+| Tool | Purpose |
 |---|---|
+| Oracle VM VirtualBox | Virtualisation platform for the lab |
 | Kali Linux | Attacker machine |
 | Windows Server 2022 | Victim mail server |
-| hMailServer | SMTP mail server |
-| Oracle VM VirtualBox | Virtualization platform |
-| swaks | SMTP tool used to craft phishing email |
-
-
-<br><br>
-
-
-## 🧪 Attack Scenario Summary
-
-An attacker used `swaks` from Kali Linux to send a spoofed phishing email to a victim mailbox hosted on hMailServer.  
-The objective was to investigate how a SOC Analyst detects the real sender, extracts evidence from email headers, identifies IOCs, and maps the attack to the MITRE ATT&CK framework.
-
+| hMailServer | SMTP/POP3/IMAP mail server |
+| swaks | SMTP command-line tool used to send phishing email |
+| Windows Defender Firewall | Firewall configuration for port 25 |
+| Notepad | Raw email header analysis |
+| VirusTotal | IOC threat intelligence lookup |
+| MITRE ATT&CK Navigator | Attack technique mapping and visualisation |
 
 <br><br>
 
-
-## 🗺️ Network Topology
+## 🗺️ Lab Network Topology
 
 ```
-Kali Linux (192.168.56.10)  --->  Windows Server 2022 (192.168.56.110)
-        Attacker                          Victim Mail Server
+┌─────────────────────────┐          ┌──────────────────────────────┐
+│      Kali Linux         │          │    Windows Server 2022       │
+│   Attacker Machine      │          │    Victim Mail Server        │
+│                         │          │                              │
+│  NAT IP : 10.0.3.15     │─SMTP────▶│  NAT IP  : 10.0.3.14        |
+│  H-Only : 192.168.56.10 │  Port 25 │  H-Only  : 192.168.56.110    │
+│                         │          │  hMailServer running         │
+└─────────────────────────┘          └──────────────────────────────┘
+         Adapter 1: NAT                       Adapter 1: NAT
+         Adapter 2: Host-Only                 Adapter 2: Host-Only
 ```
 
-
 <br><br>
 
+## ⚔️ Attack Scenario
 
-## 🧪 Attack Simulation
-A phishing email was deliberately crafted and transmitted using `swaks` from the attacker machine to the victim mailbox for forensic investigation purposes.
+An attacker on **Kali Linux** used the `swaks` SMTP tool to craft and send a spoofed phishing email to a victim mailbox hosted on **Windows Server 2022**.
 
-The email contained:
-- Spoofed sender address
-- Urgent social engineering subject
-- Fake password reset link
-
+The phishing email:
+- Spoofed the sender identity as `attacker@lab.local`
+- Used an urgent subject line: **"Urgent: Reset Your Password Immediately"**
+- Contained a fake malicious password reset link
+- Was delivered successfully to `victime@lab.local`
 
 <br><br>
-
 
 ## 🔍 Investigation Workflow
-1. Email delivered to hMailServer mailbox
-2. Raw `.eml` file extracted from mail server path
-3. Email header opened and analyzed
-4. Real attacker IP identified from the `Received` header field
-5. IOCs extracted from header and body
-6. URL/IP checked on VirusTotal
-7. Attack mapped to MITRE ATT&CK T1566
-8. Incident report prepared
 
+```
+Step 1 — Lab Setup          →  Configure VMs, network, hMailServer
+Step 2 — Attack Simulation  →  Send phishing email using swaks from Kali
+Step 3 — Email Discovery    →  Locate .eml file in victim mailbox
+Step 4 — Header Analysis    →  Extract attacker IP from Received field
+Step 5 — IOC Extraction     →  Identify all indicators from header + body
+Step 6 — Threat Intel       →  Validate IOCs on VirusTotal
+Step 7 — MITRE Mapping      →  Map to T1566 Phishing — Initial Access
+Step 8 — Incident Report    →  Document full investigation professionally
+```
 
 <br><br>
 
+## 📊 IOC Summary
 
-## 📸 Investigation Evidence (Screenshots)
+| IOC Type | Value | Verdict |
+|---|---|---|
+| IP Address | 192.168.56.10 | Attacker Machine — Kali Linux |
+| Email Address | attacker@lab.local | Spoofed Sender Identity |
+| Email Address | victime@lab.local | Victim — Target of Attack |
+| URL | http://192.168.56.10/reset | Fake Password Reset Link |
+| Tool Signature | swaks v20240103.0 | Attack Tool Fingerprint |
 
-All screenshots are available in the `Screenshots` folder, showing:
+<br><br>
 
-| Screenshot Category | Evidence Provided |
+## 🧠 MITRE ATT&CK Mapping
+
+| Field | Value |
 |---|---|
-| VM setup & connectivity | Network communication between attacker and victim |
-| hMailServer configuration | Proper SMTP server setup |
-| Phishing email sent | Attack simulation from Kali Linux |
-| Mail logs | Successful email delivery proof |
-| Header analysis | Forensic evidence from email |
-| IOC extraction | Indicators identified from attack |
-| MITRE mapping | Technique classification |
-| Incident report | Final SOC documentation |
-
+| Tactic | Initial Access |
+| Technique | T1566 — Phishing |
+| Sub-technique | T1566.002 — Spearphishing Link |
+| Detection | Email header analysis, SMTP logs, X-Mailer signature |
+| Mitigation | SPF/DKIM/DMARC enforcement, email gateway filtering, user awareness training |
 
 <br><br>
-
 
 ## 📄 Documentation
 
-- `Email_Header_Analysis.md` — Header breakdown
-- `IOC_Table.md` — Indicators of Compromise
-- `MITRE_Mapping.md` — ATT&CK technique mapping
-- `Incident_Report.pdf` — Full SOC incident report
-
+| File | Description |
+|---|---|
+| `Email_Header_Analysis.md` | Line by line breakdown of the phishing email header |
+| `IOC_Table.md` | All Indicators of Compromise extracted from the attack |
+| `MITRE_Mapping.md` | Full MITRE ATT&CK T1566 technique mapping |
+| `SOC_Incident_Report_Priyanka_Rane.docx` | Complete professional SOC incident report |
 
 <br><br>
-
 
 ## 🧠 Skills Demonstrated
-SMTP Configuration • Email Forensics • Phishing Detection • IOC Extraction • Threat Intelligence • MITRE ATT&CK Mapping • SOC Incident Reporting
 
-
-<br><br>
-
-
-> This project follows the exact workflow a SOC Analyst performs during a phishing email investigation in a real environment.
-
+`SMTP Configuration` `Email Forensics` `Phishing Detection` `IOC Extraction`
+`Email Header Analysis` `Threat Intelligence` `VirusTotal` `MITRE ATT&CK`
+`SOC Incident Reporting` `Firewall Configuration` `VirtualBox Lab Setup`
+`hMailServer` `swaks` `Windows Server 2022` `Kali Linux`
 
 <br><br>
 
+## 👩‍💻 About the Analyst
 
-## Conclusion
-This lab replicates a real-world SOC phishing investigation and demonstrates practical detection and analysis skills required for a SOC Analyst role.
+**Priyanka Rane**
+SOC Analyst L1 | Threat Detection & Incident Response
 
-This project showcases practical, hands-on SOC skills aligned with real-world phishing incident investigations.
+📧 ranepriyanka567@gmail.com
+
+🔗 [LinkedIn]([https://linkedin.com/in/priyanka-rane](https://www.linkedin.com/in/priyanka-rane-606a71257/))
+
+🐙 [GitHub](https://github.com/priyanka-sec)
+
+<br><br>
+
+> *This project follows the exact workflow a SOC Analyst performs during a phishing email investigation in a real Security Operations Centre environment.*
