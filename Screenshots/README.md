@@ -125,7 +125,7 @@ Each screenshot represents a specific step in the SOC analyst investigation work
 ## 🎣 Phishing Attack Simulation
 
 ### Screenshot 12c — Phishing Email Sent from Kali Linux
-![12c_KaliLinux_swaks_phishing_email_sent](12b_KaliLinux_swaks_phishing_email_sent.jpg)
+![12c_KaliLinux_swaks_phishing_email_sent](12b_KaliLinux_swaks_phishing_email_sent.png)
 > `swaks` command executed from Kali Linux terminal — phishing email successfully sent to victime@lab.local with subject "Urgent: Reset Your Password Immediately". Server responded with `250 Queued` confirming successful delivery. The X-Mailer header reveals the attack tool: swaks v20240103.0.
 
 ---
