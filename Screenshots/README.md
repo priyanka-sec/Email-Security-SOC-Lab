@@ -226,7 +226,7 @@ SOC Analyst L1 | Threat Detection & Incident Response
 
 📧 ranepriyanka567@gmail.com
 
-🔗 [LinkedIn](https://linkedin.com/in/priyanka-rane)
+🔗 [LinkedIn]([https://linkedin.com/in/priyanka-rane](https://www.linkedin.com/in/priyanka-rane-606a71257/))
 
 🐙 [GitHub](https://github.com/priyanka-sec)
 
