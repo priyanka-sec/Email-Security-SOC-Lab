@@ -223,8 +223,11 @@ Step 8 — Incident Report    →  Document full investigation professionally
 
 **Priyanka Rane**
 SOC Analyst L1 | Threat Detection & Incident Response
+
 📧 ranepriyanka567@gmail.com
+
 🔗 [LinkedIn](https://linkedin.com/in/priyanka-rane)
+
 🐙 [GitHub](https://github.com/priyanka-sec)
 
 <br><br>
