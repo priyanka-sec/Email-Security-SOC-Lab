@@ -1,235 +1,181 @@
-<h1 align="center">🛡️ Email Security SOC Lab</h1>
-<h3 align="center">Phishing Email Attack Simulation — Detection, Forensic Analysis & MITRE ATT&CK Mapping</h3>
+<h1 align="center">📸 Investigation Evidence — Screenshots</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-VirtualBox-blue?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Attacker-Kali%20Linux-red?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Victim-Windows%20Server%202022-blue?style=flat-square"/>
-  <img src="https://img.shields.io/badge/MITRE-T1566%20Phishing-orange?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Status-Completed-green?style=flat-square"/>
+This folder contains all visual evidence collected during the phishing email investigation.<br>
+Each screenshot represents a specific step in the SOC analyst investigation workflow.
 </p>
 
-<br><br>
+---
 
-## 📌 Project Overview
+## 📋 Table of Contents
 
-This project demonstrates the **complete SOC analyst workflow** for investigating a phishing email attack — from attack simulation to forensic analysis, IOC extraction, threat intelligence validation, MITRE ATT&CK mapping, and professional incident reporting.
+- [VM Setup & Network Connectivity](#-vm-setup--network-connectivity)
+- [hMailServer Configuration](#️-hmailserver-configuration)
+- [Firewall Configuration](#-firewall-configuration)
+- [Phishing Attack Simulation](#-phishing-attack-simulation)
+- [Email Delivery Confirmation](#-email-delivery-confirmation)
+- [Email Header Forensic Analysis](#-email-header-forensic-analysis)
+- [Threat Intelligence Validation](#-threat-intelligence-validation)
+- [MITRE ATT&CK Mapping](#️-mitre-attck-mapping)
 
-The entire lab was built inside **Oracle VM VirtualBox** using two virtual machines — a **Kali Linux attacker machine** and a **Windows Server 2022 victim mail server** running **hMailServer**.
+---
 
-> This project replicates exactly what a SOC Analyst does during a real phishing email investigation.
-
-<br><br>
-
-## 🎯 Objectives
-
-- ✅ Simulate a phishing email attack using the `swaks` SMTP tool
-- ✅ Configure a real mail server (hMailServer) to receive and store emails
-- ✅ Extract and forensically analyse raw email headers
-- ✅ Identify the attacker's real IP address from the `Received` header field
-- ✅ Extract all Indicators of Compromise (IOCs) from the email
-- ✅ Validate IOCs using VirusTotal threat intelligence
-- ✅ Map the attack to MITRE ATT&CK Technique T1566 — Phishing
-- ✅ Produce a professional SOC Incident Report
+## 🖥️ VM Setup & Network Connectivity
 
-<br><br>
+### Screenshot 01 — VirtualBox Both VMs Running
+![01_VirtualBox_both_VMs_running](01_VirtualBox_both_VMs_running.jpeg)
+> Both Kali Linux (attacker) and Windows Server 2022 (victim mail server) running simultaneously in Oracle VirtualBox — confirming the lab environment is fully active and ready.
 
-## 🧰 Tools & Technologies Used
+---
 
-| Tool | Purpose |
-|---|---|
-| Oracle VM VirtualBox | Virtualisation platform for the lab |
-| Kali Linux | Attacker machine |
-| Windows Server 2022 | Victim mail server |
-| hMailServer | SMTP/POP3/IMAP mail server |
-| swaks | SMTP command-line tool used to send phishing email |
-| Windows Defender Firewall | Firewall configuration for port 25 |
-| Notepad | Raw email header analysis |
-| VirusTotal | IOC threat intelligence lookup |
-| MITRE ATT&CK Navigator | Attack technique mapping and visualisation |
+### Screenshot 02 — Kali Linux IP Addresses
+![02_KaliLinux_ip_address_eth0_eth1](02_KaliLinux_ip_address_eth0_eth1.jpeg)
+> Kali Linux IP addresses confirmed using the `ip a` command — eth0 (NAT: 10.0.3.15) for internet access and eth1 (Host-Only: 192.168.57.11) for lab communication with Windows Server.
 
-<br><br>
+---
 
-## 🗺️ Lab Network Topology
+### Screenshot 03 — Windows Server IP Configuration
+![03_WindowsServer_ipconfig_both_adapters](03_WindowsServer_ipconfig_both_adapters.jpeg)
+> Windows Server 2022 IP configuration confirmed using `ipconfig` — NAT adapter (10.0.3.14) and Host-Only adapter (192.168.57.110) both active.
 
-```
-┌─────────────────────────┐          ┌──────────────────────────────┐
-│      Kali Linux         │          │    Windows Server 2022       │
-│   Attacker Machine      │          │    Victim Mail Server        │
-│                         │          │                              │
-│  NAT IP : 10.0.3.15     │─SMTP────▶│  NAT IP  : 10.0.3.14        |
-│  H-Only : 192.168.56.10 │  Port 25 │  H-Only  : 192.168.56.110    │
-│                         │          │  hMailServer running         │
-└─────────────────────────┘          └──────────────────────────────┘
-         Adapter 1: NAT                       Adapter 1: NAT
-         Adapter 2: Host-Only                 Adapter 2: Host-Only
-```
+---
 
-<br><br>
+### Screenshot 04 — Ping from Kali to Windows Server
+![04_KaliLinux_ping_to_WindowsServer](04_KaliLinux_ping_to_WindowsServer.jpg)
+> Successful ping from Kali Linux to Windows Server (192.168.57.110) — confirms the two VMs can communicate over the Host-Only network. This is required for the phishing email to be delivered.
 
-## ⚔️ Attack Scenario
+---
 
-An attacker on **Kali Linux** used the `swaks` SMTP tool to craft and send a spoofed phishing email to a victim mailbox hosted on **Windows Server 2022**.
+### Screenshot 05 — Ping from Windows Server to Kali
+![05_WindowsServer_ping_to_KaliLinux](05_WindowsServer_ping_to_KaliLinux.png)
+> Successful ping from Windows Server to Kali Linux (192.168.57.11) — confirms bidirectional network connectivity between attacker and victim machines.
 
-The phishing email:
-- Spoofed the sender identity as `attacker@lab.local`
-- Used an urgent subject line: **"Urgent: Reset Your Password Immediately"**
-- Contained a fake malicious password reset link
-- Was delivered successfully to `victime@lab.local`
+---
 
-<br><br>
+## ⚙️ hMailServer Configuration
 
-## 🔍 Investigation Workflow
+### Screenshot 06 — lab.local Domain Created
+![06_hMailServer_lab_local_domain_created](06_hMailServer_lab_local_domain_created.jpg)
+> Local mail domain `lab.local` created inside hMailServer Administrator — this is the email domain used for all mailboxes in the lab. Equivalent to a corporate email domain in a real organisation.
 
-```
-Step 1 — Lab Setup          →  Configure VMs, network, hMailServer
-Step 2 — Attack Simulation  →  Send phishing email using swaks from Kali
-Step 3 — Email Discovery    →  Locate .eml file in victim mailbox
-Step 4 — Header Analysis    →  Extract attacker IP from Received field
-Step 5 — IOC Extraction     →  Identify all indicators from header + body
-Step 6 — Threat Intel       →  Validate IOCs on VirusTotal
-Step 7 — MITRE Mapping      →  Map to T1566 Phishing — Initial Access
-Step 8 — Incident Report    →  Document full investigation professionally
-```
+---
 
-<br><br>
+### Screenshot 07 — Victim Account Creation
+![07_hMailServer_victim_account_creation](07_hMailServer_victim_account_creation.jpg)
+> Victim mailbox `victime@lab.local` created in hMailServer — this account plays the role of an innocent employee who receives the phishing email.
 
-## 📸 Investigation Evidence
+---
 
-### 🖥️ Step 1 — VM Setup & Network Connectivity
+### Screenshot 08 — Attacker Account Creation
+![08_hMailServer_attacker_account_creation](08_hMailServer_attacker_account_creation.jpg)
+> Attacker mailbox `attacker@lab.local` created in hMailServer — this account is used as the spoofed sender identity in the phishing email.
 
-| Screenshot | Description |
-|---|---|
-| ![01](01_VirtualBox_both_VMs_running.jpeg) | **01** — Both Kali Linux and Windows Server 2022 VMs running simultaneously in Oracle VirtualBox — confirming the lab environment is fully active |
-| ![02](02_KaliLinux_ip_address_eth0_eth1.jpeg) | **02** — Kali Linux IP addresses: eth0 (NAT: 10.0.3.15) and eth1 (Host-Only: 192.168.57.11) confirmed using `ip a` command |
-| ![03](03_WindowsServer_ipconfig_both_adapters.jpeg) | **03** — Windows Server 2022 IP configuration: NAT (10.0.3.14) and Host-Only (192.168.57.110) confirmed using `ipconfig` |
-| ![04](04_KaliLinux_ping_to_WindowsServer.jpg) | **04** — Successful ping from Kali Linux to Windows Server (192.168.57.110) — confirming Host-Only network communication |
-| ![05](05_WindowsServer_ping_to_KaliLinux.png) | **05** — Successful ping from Windows Server to Kali Linux (192.168.57.11) — confirming bidirectional network connectivity |
+---
 
-<br><br>
+### Screenshot 09 — Both Accounts Listed
+![09_hMailServer_both_accounts_listed](09_hMailServer_both_accounts_listed.jpg)
+> Both attacker and victim accounts visible under the lab.local domain in hMailServer — confirms successful account setup for the phishing simulation.
 
-### ⚙️ Step 2 — hMailServer Configuration
+---
 
-| Screenshot | Description |
-|---|---|
-| ![06](06_hMailServer_lab_local_domain_created.jpg) | **06** — Local mail domain `lab.local` created inside hMailServer — this is the domain used for all email addresses in the lab |
-| ![07](07_hMailServer_victim_account_creation.jpg) | **07** — Victim mailbox account `victime@lab.local` created — this is the target of the phishing attack |
-| ![08](08_hMailServer_attacker_account_creation.jpg) | **08** — Attacker mailbox account `attacker@lab.local` created — this is the spoofed sender identity |
-| ![09](09_hMailServer_both_accounts_listed.jpg) | **09** — Both attacker and victim accounts visible under lab.local domain in hMailServer — confirming successful account setup |
-| ![10](10_hMailServer_SMTP_settings.jpg) | **10** — SMTP protocol settings configured in hMailServer — port 25 enabled for email delivery |
-| ![10b](10a_hMailServer_SMTP_delivery_settings.jpg) | **10b** — SMTP delivery settings configured — local host name set to Windows Server IP (192.168.57.110) |
-| ![11](11_hMailServer_status_running.jpg) | **11** — hMailServer status showing all services running — SMTP, POP3, and IMAP active |
-| ![11b](11a_hMailServer_IP_ranges_Kali_added.jpg) | **11b** — Kali Linux IP (192.168.57.11) added to trusted IP ranges — allows Kali to deliver emails through the server without authentication |
-| ![11c](11b_hMailServer_TCPIP_ports.jpg) | **11c** — TCP/IP ports configured: Port 25 (SMTP), Port 110 (POP3), Port 143 (IMAP), Port 587 (SMTP) — all listening on 0.0.0.0 |
+### Screenshot 10 — SMTP Settings
+![10_hMailServer_SMTP_settings](10_hMailServer_SMTP_settings.jpg)
+> SMTP protocol settings in hMailServer — Maximum connections set to 0 (unlimited) and maximum message size set to 20480 KB. Port 25 is active for email delivery.
 
-<br><br>
+---
 
-### 🔥 Step 3 — Firewall Configuration
+### Screenshot 10b — SMTP Delivery Settings
+![10b_hMailServer_SMTP_delivery_settings](10a_hMailServer_SMTP_delivery_settings.jpg)
+> SMTP delivery settings configured — Local host name set to Windows Server Host-Only IP (192.168.57.110). This tells hMailServer its own network address so Kali Linux can deliver emails to it correctly.
 
-| Screenshot | Description |
-|---|---|
-| ![12a](12_WindowsServer_Firewall_Port25_rule_creation.jpg) | **12a** — Windows Defender Firewall inbound rule creation — opening TCP Port 25 to allow SMTP connections from Kali Linux |
-| ![12b](12a_WindowsServer_Firewall_Port25_rule_added.jpg) | **12b** — Firewall rule "hMailServer SMTP Port 25" successfully added — visible at the top of Inbound Rules list with Status: Enabled, Action: Allow |
+---
 
-<br><br>
+### Screenshot 11 — hMailServer Status Running
+![11_hMailServer_status_running](11_hMailServer_status_running.jpg)
+> hMailServer status page showing all services are running — SMTP (port 25), POP3 (port 110), and IMAP (port 143) all active and listening for connections.
 
-### 🎣 Step 4 — Phishing Email Attack Simulation
+---
 
-| Screenshot | Description |
-|---|---|
-| ![12c](12b_KaliLinux_swaks_phishing_email_sent.png) | **12c** — `swaks` command executed from Kali Linux — phishing email successfully delivered to victime@lab.local — server responded: `250 Queued` |
+### Screenshot 11b — Kali Linux IP Added to IP Ranges
+![11b_hMailServer_IP_ranges_Kali_added](11a_hMailServer_IP_ranges_Kali_added.jpg)
+> Kali Linux IP address (192.168.57.11) added to hMailServer trusted IP Ranges with priority 20 — this allows Kali Linux to send emails through the mail server without SMTP authentication, simulating a real attacker bypassing controls.
 
-<br><br>
+---
 
-### 📬 Step 5 — Email Delivery Confirmation
+### Screenshot 11c — TCP/IP Ports Configuration
+![11c_hMailServer_TCPIP_ports](11b_hMailServer_TCPIP_ports.jpg)
+> TCP/IP ports configured in hMailServer — Port 25 (SMTP), Port 110 (POP3), Port 143 (IMAP), and Port 587 (SMTP) all listening on 0.0.0.0 — meaning they accept connections from all IP addresses including Kali Linux.
 
-| Screenshot | Description |
-|---|---|
-| ![13](13_hMailServer_logs_email_received.jpg) | **13** — Phishing email stored as .EML file in victim mailbox at `C:\Program Files (x86)\hMailServer\Data\lab.local\victime` — confirms successful delivery |
+---
 
-<br><br>
+## 🔥 Firewall Configuration
 
-### 🔬 Step 6 — Email Header Forensic Analysis
+### Screenshot 12a — Firewall Port 25 Rule Creation
+![12a_WindowsServer_Firewall_Port25_rule_creation](12_WindowsServer_Firewall_Port25_rule_creation.jpg)
+> Windows Defender Firewall Inbound Rule created to open TCP Port 25 — this was required because the firewall was blocking Kali Linux from connecting to the mail server. Without this rule, swaks returned "Connection refused".
 
-| Screenshot | Description |
-|---|---|
-| ![14](14_Email_raw_header_analysis.jpg) | **14** — Raw email header opened in Notepad — showing Return-Path, Received, Date, To, From, Subject, Message-Id, and X-Mailer fields |
-| ![15](15_Email_sender_IP_highlighted.jpg) | **15** — Attacker's real IP address `192.168.56.10` identified in the `Received` header field — this is the critical forensic evidence proving the attack origin |
+---
 
-<br><br>
+### Screenshot 12b — Firewall Port 25 Rule Added
+![12b_WindowsServer_Firewall_Port25_rule_added](12a_WindowsServer_Firewall_Port25_rule_added.jpg)
+> Firewall rule "hMailServer SMTP Port 25" successfully added and visible at the top of the Inbound Rules list — Profile: All, Enabled: Yes, Action: Allow. After this rule was added, Kali Linux was able to connect successfully.
 
-### 🌐 Step 7 — Threat Intelligence Validation
+---
 
-| Screenshot | Description |
-|---|---|
-| ![16](16_VirusTotal_sender_IP_lookup.jpg) | **16** — VirusTotal lookup of attacker IP `192.168.56.10` — result: 0/91 vendors flagged, tagged as private IP — expected result for a lab environment |
+## 🎣 Phishing Attack Simulation
 
-<br><br>
+### Screenshot 12c — Phishing Email Sent from Kali Linux
+![12c_KaliLinux_swaks_phishing_email_sent](12b_KaliLinux_swaks_phishing_email_sent.jpg)
+> `swaks` command executed from Kali Linux terminal — phishing email successfully sent to victime@lab.local with subject "Urgent: Reset Your Password Immediately". Server responded with `250 Queued` confirming successful delivery. The X-Mailer header reveals the attack tool: swaks v20240103.0.
 
-### 🗺️ Step 8 — MITRE ATT&CK Mapping
+---
 
-| Screenshot | Description |
-|---|---|
-| ![17](17_MITRE_ATTCK_T1566_Phishing.jpg) | **17** — MITRE ATT&CK Technique T1566 (Phishing) page — confirms Tactic: Initial Access, Sub-techniques: T1566.001 to T1566.004 |
-| ![18](18_ATT&CK_Navigator_T1566_highlighted.jpg) | **18** — ATT&CK Navigator with T1566 Phishing highlighted in red under Initial Access — visual proof of attack technique mapping |
+## 📬 Email Delivery Confirmation
 
-<br><br>
+### Screenshot 13 — Email Stored in Victim Mailbox
+![13_hMailServer_logs_email_received](13_hMailServer_logs_email_received.jpg)
+> Phishing email stored as a .EML file inside the victim mailbox at `C:\Program Files (x86)\hMailServer\Data\lab.local\victime` — direct proof that the email was successfully delivered and stored on the mail server. File size: 538 bytes. Date: 5/6/2026.
 
-## 📊 IOC Summary
+---
 
-| IOC Type | Value | Verdict |
-|---|---|---|
-| IP Address | 192.168.56.10 | Attacker Machine — Kali Linux |
-| Email Address | attacker@lab.local | Spoofed Sender Identity |
-| Email Address | victime@lab.local | Victim — Target of Attack |
-| URL | http://192.168.56.10/reset | Fake Password Reset Link |
-| Tool Signature | swaks v20240103.0 | Attack Tool Fingerprint |
+## 🔬 Email Header Forensic Analysis
 
-<br><br>
+### Screenshot 14 — Raw Email Header
+![14_Email_raw_header_analysis](14_Email_raw_header_analysis.jpg)
+> Raw email header opened in Notepad showing all forensic fields — Return-Path, Received, Date, To, From, Subject, Message-Id, and X-Mailer. This is the primary evidence used in the SOC investigation to identify the attacker.
 
-## 🧠 MITRE ATT&CK Mapping
+---
 
-| Field | Value |
-|---|---|
-| Tactic | Initial Access |
-| Technique | T1566 — Phishing |
-| Sub-technique | T1566.002 — Spearphishing Link |
-| Detection | Email header analysis, SMTP logs, X-Mailer signature |
-| Mitigation | SPF/DKIM/DMARC enforcement, email gateway filtering, user awareness training |
+### Screenshot 15 — Attacker IP Identified
+![15_Email_sender_IP_highlighted](15_Email_sender_IP_highlighted.jpg)
+> **Critical forensic finding** — Attacker's real IP address `192.168.56.10` identified in the `Received` header field. Even though the From address was spoofed, the Received field always reveals the true origin IP. This is the most important IOC extracted from this investigation.
 
-<br><br>
+---
 
-## 📄 Documentation
+## 🌐 Threat Intelligence Validation
 
-| File | Description |
-|---|---|
-| `Email_Header_Analysis.md` | Line by line breakdown of the phishing email header |
-| `IOC_Table.md` | All Indicators of Compromise extracted from the attack |
-| `MITRE_Mapping.md` | Full MITRE ATT&CK T1566 technique mapping |
-| `SOC_Incident_Report_Priyanka_Rane.docx` | Complete professional SOC incident report |
+### Screenshot 16 — VirusTotal IP Lookup
+![16_VirusTotal_sender_IP_lookup](16_VirusTotal_sender_IP_lookup.jpg)
+> VirusTotal lookup result for attacker IP `192.168.56.10` — 0/91 security vendors flagged it as malicious, tagged as "private" IP. Expected result for a private lab network address. In a real-world investigation, the public IP of the attacker would be checked here and would likely show malicious detections.
 
-<br><br>
+---
 
-## 🧠 Skills Demonstrated
+## 🗺️ MITRE ATT&CK Mapping
 
-`SMTP Configuration` `Email Forensics` `Phishing Detection` `IOC Extraction`
-`Email Header Analysis` `Threat Intelligence` `VirusTotal` `MITRE ATT&CK`
-`SOC Incident Reporting` `Firewall Configuration` `VirtualBox Lab Setup`
-`hMailServer` `swaks` `Windows Server 2022` `Kali Linux`
+### Screenshot 17 — MITRE ATT&CK T1566 Phishing
+![17_MITRE_ATTCK_T1566_Phishing](17_MITRE_ATTCK_T1566_Phishing.jpg)
+> Official MITRE ATT&CK page for Technique T1566 — Phishing. Confirms: Tactic = Initial Access, Sub-techniques = T1566.001 to T1566.004, Platforms = Windows/Linux/macOS. This technique matches exactly what was performed in this lab.
 
-<br><br>
+---
 
-## 👩‍💻 About the Analyst
+### Screenshot 18 — ATT&CK Navigator T1566 Highlighted
+![18_ATTCK_Navigator_T1566_highlighted](18_ATT&CK_Navigator_T1566_highlighted.jpg)
+> MITRE ATT&CK Navigator showing T1566 Phishing highlighted in red under the Initial Access tactic column — visual representation of the attack technique used in this investigation. ATT&CK Navigator is a real tool used by SOC teams to track and visualise detected attack techniques.
 
-**Priyanka Rane**
-SOC Analyst L1 | Threat Detection & Incident Response
+---
 
-📧 ranepriyanka567@gmail.com
-
-🔗 [LinkedIn]([https://linkedin.com/in/priyanka-rane](https://www.linkedin.com/in/priyanka-rane-606a71257/))
-
-🐙 [GitHub](https://github.com/priyanka-sec)
-
-<br><br>
-
-> *This project follows the exact workflow a SOC Analyst performs during a phishing email investigation in a real Security Operations Centre environment.*
+<p align="center">
+  <b>Total Screenshots: 23 &nbsp;|&nbsp; Investigation Steps Covered: 8 &nbsp;|&nbsp; Tools Used: 9</b><br><br>
+  All screenshots were taken during a live lab simulation performed by<br>
+  <b>Priyanka Rane — SOC Analyst L1</b>
+</p>
