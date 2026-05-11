@@ -137,7 +137,7 @@ Step 8 — Incident Report    →  Document full investigation professionally
 
 | Screenshot | Description |
 |---|---|
-| ![12c](12b_KaliLinux_swaks_phishing_email_sent.jpg) | **12c** — `swaks` command executed from Kali Linux — phishing email successfully delivered to victime@lab.local — server responded: `250 Queued` |
+| ![12c](12b_KaliLinux_swaks_phishing_email_sent.png) | **12c** — `swaks` command executed from Kali Linux — phishing email successfully delivered to victime@lab.local — server responded: `250 Queued` |
 
 <br><br>
 
@@ -171,7 +171,7 @@ Step 8 — Incident Report    →  Document full investigation professionally
 | Screenshot | Description |
 |---|---|
 | ![17](17_MITRE_ATTCK_T1566_Phishing.jpg) | **17** — MITRE ATT&CK Technique T1566 (Phishing) page — confirms Tactic: Initial Access, Sub-techniques: T1566.001 to T1566.004 |
-| ![18](18_ATTCK_Navigator_T1566_highlighted.jpg) | **18** — ATT&CK Navigator with T1566 Phishing highlighted in red under Initial Access — visual proof of attack technique mapping |
+| ![18](18_ATT&CK_Navigator_T1566_highlighted.jpg) | **18** — ATT&CK Navigator with T1566 Phishing highlighted in red under Initial Access — visual proof of attack technique mapping |
 
 <br><br>
 
