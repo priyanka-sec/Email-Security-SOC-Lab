@@ -8,7 +8,7 @@ These IOCs help a SOC Analyst detect, block, and investigate similar phishing at
 |---|---|---|---|
 | IP Address | 192.168.56.10 | Source of phishing email (Kali Linux attacker) | Malicious (Lab) |
 | Email Address | attacker@lab.local | Spoofed sender identity | Malicious |
-| Email Address | victime@lab.local | Target user mailbox | Victim |
+| Email Address | victim@lab.local | Target user mailbox | Victim |
 | URL | http://192.168.56.10/reset | Fake password reset phishing link | Malicious |
 | Tool Signature | swaks | SMTP tool used to craft the email | Suspicious |
 | Domain | lab.local | Internal lab domain | Internal |
