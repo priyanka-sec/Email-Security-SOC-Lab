@@ -57,8 +57,8 @@ The entire lab was built inside **Oracle VM VirtualBox** using two virtual machi
 │      Kali Linux         │          │    Windows Server 2022       │
 │   Attacker Machine      │          │    Victim Mail Server        │
 │                         │          │                              │
-│  NAT IP : 10.0.3.15     │─SMTP────▶│  NAT IP  : 10.0.3.14        │
-│  H-Only : 192.168.56.10 │  Port 25 │  H-Only  : 192.168.56.110   │
+│  NAT IP : 10.0.3.15     │─SMTP────▶│  NAT IP  : 10.0.3.14        |
+│  H-Only : 192.168.56.10 │  Port 25 │  H-Only  : 192.168.56.110    │
 │                         │          │  hMailServer running         │
 └─────────────────────────┘          └──────────────────────────────┘
          Adapter 1: NAT                       Adapter 1: NAT
